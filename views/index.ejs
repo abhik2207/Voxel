@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voxel - Home</title>
+    <link rel="shortcut icon" href="/images/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <div class="w-full min-h-screen bg-zinc-900 text-white p-12">
+        <nav class="flex gap-6 mb-2 justify-center">
+            <a href="/" class="px-6 py-2 bg-zinc-800 hover:bg-zinc-700 rounded-md">Home</a>
+            <a href="/login" class="px-6 py-2 bg-zinc-800 hover:bg-zinc-700 rounded-md">Login</a>
+            <a href="/signup" class="px-6 py-2 bg-zinc-800 hover:bg-zinc-700 rounded-md">Signup</a>
+            <a href="/profile" class="px-6 py-2 bg-zinc-800 hover:bg-zinc-700 rounded-md">Profile</a>
+            <a href="/logout" class="px-6 py-2 bg-zinc-800 hover:bg-zinc-700 rounded-md">Logout</a>
+        </nav>
+        <hr class="mt-4 mb-12 opacity-30">
+
+        <h1 class="text-3xl">All posts</h1>
+        <hr class="mt-2 mb-10 opacity-30">
+
+        <div class="posts mt-4 flex flex-wrap gap-2">
+            <% posts.reverse().forEach(function(post){ %>
+                <div class="post px-5 py-3 border-2 border-zinc-700 bg-zinc-800 rounded-md w-[33%]">
+                    <h1 class="text-2xl text-white font-semibold"><%= post.title %></h1>
+                    <h3 class="text-blue-400 text-sm cursor-pointer tracking-wider">@<%= post.user.username %></h3>
+                    <p class="text-md text-white mt-6"><%= post.content %></p>
+                    <h3 class="text-zinc-500 text-sm mt-2 tracking-tight font-semibold"><%= new Date(post.date).toLocaleString() %></h3>
+    
+                    <p class="text-sm text-blue-500 block mt-3"><%= post.likes.length %> likes</pc>
+                    <div class="buttons w-full flex gap-4 mt-5 border-t-2 border-zinc-700 pt-3">
+                        <a href="/like/<%= post._id %>" class="text-blue-500">
+                            <%= post.likes.indexOf(user._id) === -1 ? "Like" : "Unlike" %>
+                        </a>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+    </div>
+    
+    <script src="/javascripts/script.js"></script>
+</body>
+</html>

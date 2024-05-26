@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voxel - Edit</title>
+    <link rel="shortcut icon" href="/images/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <div class="w-full min-h-screen bg-zinc-900 text-white p-12">
+        <nav class="flex gap-6 mb-2 justify-center">
+            <a href="/" class="px-6 py-2 bg-zinc-800 hover:bg-zinc-700 rounded-md">Home</a>
+            <a href="/login" class="px-6 py-2 bg-zinc-800 hover:bg-zinc-700 rounded-md">Login</a>
+            <a href="/signup" class="px-6 py-2 bg-zinc-800 hover:bg-zinc-700 rounded-md">Signup</a>
+            <a href="/profile" class="px-6 py-2 bg-zinc-800 hover:bg-zinc-700 rounded-md">Profile</a>
+            <a href="/logout" class="px-6 py-2 bg-zinc-800 hover:bg-zinc-700 rounded-md">Logout</a>
+        </nav>
+        <hr class="mt-4 mb-12 opacity-30">
+
+        <h2 class="text-3xl">Edit Post</h2>
+        <hr class="mt-2 mb-10 opacity-30">
+
+        <form action="/update/<%= post._id %>" method="post" class="flex gap-4 flex-col items-start">
+            <input type="text" name="title" id="title" class="px-5 py-2 bg-transparent outline-none border-2 border-zinc-800" placeholder="Title here" value="<%= post.title %>">
+            <textarea name="content" id="content" cols="50" rows="5" class="px-5 py-2 bg-transparent outline-none border-2 border-zinc-800 resize-none" placeholder="What's on your mind?"><%= post.content %></textarea>
+            <input type="submit" value="Update post" class="bg-blue-600 px-8 py-2 rounded-md cursor-pointer">
+        </form>
+    </div>
+    
+    <script src="/javascripts/script.js"></script>
+</body>
+</html>
