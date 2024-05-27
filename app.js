@@ -7,6 +7,7 @@ const PostModel = require('./models/Post');
 const cookieParser = require('cookie-parser');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const upload = require('./config/multerConfig');
 
 const app = express();
 
@@ -19,10 +20,23 @@ app.use(cookieParser());
 app.get('/', isLoggedIn, async (req, res) => {
     const posts = await PostModel.find().populate("user");  // This is how we populate a referenced field
     const user = await UserModel.findOne({ _id: req.user.userId }).populate("posts");  // This is how we populate a referenced field
-    console.log(posts);
-
+    
     console.log(chalk.hex('#03befc').bold("~ Homepage loaded!"));
     res.render("index.ejs", { posts, user });
+});
+
+app.get('/profile/upload', isLoggedIn, (req, res) => {
+    console.log(chalk.hex('#03befc').bold("~ Profile pic upload page loaded!"));
+    res.render("upload.ejs");
+});
+
+app.post('/upload', isLoggedIn, upload.single('profilePic'), async (req, res) => {
+    const user = await UserModel.findOne({ _id: req.user.userId });
+    user.profilePicture = req.file.filename;
+    await user.save();
+
+    console.log(chalk.hex('#03befc').bold("~ Profile pic uploaded!"));
+    res.redirect("/profile");
 });
 
 app.get('/login', (req, res) => {
@@ -149,6 +163,10 @@ function isLoggedIn(req, res, next) {
         console.log(chalk.hex('#03befc').bold("~ User is not logged in!"));
         res.render("loginRequired.ejs");
     }
+    else if(!req.cookies.token) {
+        console.log(chalk.hex('#03befc').bold("~ User is not logged in!"));
+        res.render("loginRequired.ejs");
+    }
     else {
         const data = jwt.verify(req.cookies.token, 'MonkeysCanBreathe');
         req.user = data;
@@ -158,5 +176,6 @@ function isLoggedIn(req, res, next) {
 }
 
 app.listen(8080, () => {
+    // NOTE: Go to /login first when you load
     console.log(chalk.hex('#ffd000').underline.bold("--- SERVER RUNNING AT PORT 8080 ---"));
 });

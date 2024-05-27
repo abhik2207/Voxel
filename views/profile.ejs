@@ -19,8 +19,17 @@
         </nav>
         <hr class="mt-4 mb-12 opacity-30">
 
-        <h2 class="text-3xl font-semibold">Hello, <%= user.name %> 👋🏻</h2>
-        <h3 class="text-lg tracking-tight">You can create a post from below</h2>
+        <div class="flex items-center gap-4">
+            <div class="h-16 w-16 rounded-md overflow-hidden">
+                <a href="/profile/upload">
+                    <img src="/uploads/<%= user.profilePicture %>" alt="Profile pic" class="h-full w-full object-cover object-center">
+                </a>
+            </div>
+            <div>
+                <h2 class="text-3xl font-semibold">Hello, <%= user.name %> 👋🏻</h2>
+                <h3 class="text-lg tracking-tight">You can create a post from below</h2>
+            </div>
+        </div>
         <hr class="mt-2 mb-10 opacity-30">
 
         <form action="/post" method="post" class="flex gap-4 flex-col items-start">
